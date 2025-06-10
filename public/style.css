@@ -1,0 +1,80 @@
+/* public/styles.css */
+
+body {
+  font-family: sans-serif;
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #eee;
+  background-color: #fefefe;
+}
+
+h1 {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+input,
+select,
+button {
+  padding: 0.6rem;
+  width: 100%;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+#resultado {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1.1rem;
+}
+
+.logo {
+  display: block;
+  margin: 0 auto 1.5rem;
+  max-width: 160px;
+}
+
+/* Responsive para móviles */
+@media (max-width: 480px) {
+  body {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+    line-height: 1.4;
+    text-align: center;
+  }
+
+  input,
+  select,
+  button {
+    font-size: 1rem;
+  }
+
+  button {
+    padding: 0.7rem;
+  }
+}

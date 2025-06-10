@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Préstamos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <img src="assets/logo_monte.png" alt="Logo" class="logo">
+
+  <h1>Calculadora de Préstamos por Material</h1>
+
+  <label for="material">Selecciona el material:</label>
+  <select id="material">
+    <option value="001">Oro puro 24k</option>
+    <option value="002">Oro alto 18k</option>
+    <option value="003">Oro medio 14k</option>
+    <option value="004">Oro bajo 10k</option>
+    <option value="005">Plata ley .925</option>
+    <option value="006">Titanio</option>
+    <option value="007">Rodio</option>
+  </select>
+
+  <label for="gramos">Peso en gramos:</label>
+  <input id="gramos" placeholder="Ingresa los gramos...">
+
+  <button onclick="calcularPrestamo()">Calcular Préstamo</button>
+
+  <div id="resultado"></div>
+
+  <script>
+    async function calcularPrestamo() {
+      const id = document.getElementById('material').value;
+      const gramos = document.getElementById('gramos').value;
+      const resultado = document.getElementById('resultado');
+
+      if (!gramos || gramos <= 0) {
+        resultado.innerText = 'Por favor ingresa un peso en gramos válido.';
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://localhost:3000/api/prestamo?id=${id}&gramos=${gramos}`);
+        const data = await response.json();
+
+        if (data && data.montoPrestamo) {
+          resultado.innerHTML = `<strong>Préstamo estimado:</strong> $${data.montoPrestamo}`;
+        } else {
+          resultado.innerText = 'No se pudo calcular el préstamo.';
+        }
+      } catch (error) {
+        resultado.innerText = 'Error al conectar con la API.';
+      }
+    }
+  </script>
+</body>
+</html>
