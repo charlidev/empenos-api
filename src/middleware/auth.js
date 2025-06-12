@@ -1,10 +1,21 @@
-module.exports = function (req, res, next) {
-  const token = req.headers['authorization'];
-  const expectedToken = '536ba5f66b4c3d0397ff7301887370ce62333340e8a545b4bc067de1bfb963f0';
+const axios = require('axios');
 
-  if (token === expectedToken) {
-    next();
-  } else {
-    res.status(403).json({ error: 'Token inválido o faltante' });
+module.exports = async function (req, res, next) {
+  const token = req.headers['authorization'];
+
+  if (!token) {
+    return res.status(403).json({ error: 'Token faltante' });
+  }
+
+  try {
+    const response = await axios.post('http://localhost:4000/verify-token', { token });
+
+    if (response.data.valid) {
+      next();
+    } else {
+      res.status(403).json({ error: 'Token inválido' });
+    }
+  } catch (err) {
+    res.status(500).json({ error: 'Error al verificar el token' });
   }
 };
