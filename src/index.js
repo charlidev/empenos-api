@@ -1,19 +1,22 @@
-//importando express
 const express = require('express');
 const app = express();
 const path = require('path');
 
-// Importando las rutas de prestamos
+// Importar rutas y middleware
 const prestamosRoutes = require('./routes/prestamos');
-app.use('/api', prestamosRoutes);
+const authMiddleware = require('./middleware/auth');
 
-// Accede a la carpeta 'public' para servir archivos estáticos
-app.use(express.static(path.join(__dirname, '../public')));
-
+// Middleware para parsear JSON
 app.use(express.json());
 
-// levantando el servidor en puerto 3000
+// Servir archivos estáticos desde /public
+app.use(express.static(path.join(__dirname, '../public')));
+
+// Aplicar autenticación a todas las rutas /api/*
+app.use('/api', authMiddleware, prestamosRoutes);
+
+// Escuchar en localhost para pruebas locales
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en puerto ${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
